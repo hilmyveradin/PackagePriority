@@ -1,7 +1,7 @@
 class Paket:
   
 
-  
+
   def __init__(self, paketID, namaPengirimPaket, jenisBarang, jenisPaket, durasiPaket, priority):
     self.id = paketID
     self.namaPengirimPaket = namaPengirimPaket
@@ -9,6 +9,8 @@ class Paket:
     self.jenisPaket = jenisPaket
     self.durasiPaket = durasiPaket
     self.priority = priority
+
+    # add kerjaan baru
 
   def __lt__(self, other):
     return self.priority[self.durasiPaket] < self.priority[other.durasiPaket]
