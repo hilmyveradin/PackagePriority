@@ -11,6 +11,7 @@ class Paket:
     self.priority = priority
 
     # add kerjaan baru
+    #abc
 
   def __lt__(self, other):
     return self.priority[self.durasiPaket] < self.priority[other.durasiPaket]
