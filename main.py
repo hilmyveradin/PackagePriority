@@ -9,6 +9,7 @@ def generatePaketID():
     global paketCounter
     paketCounter += 1
     return f'PAKET{str(paketCounter).zfill(3)}'
+    
 
 # Define the duration-to-priority mapping
 global priority
