@@ -1,5 +1,7 @@
 class Paket:
   
+
+  
   def __init__(self, paketID, namaPengirimPaket, jenisBarang, jenisPaket, durasiPaket, priority):
     self.id = paketID
     self.namaPengirimPaket = namaPengirimPaket
