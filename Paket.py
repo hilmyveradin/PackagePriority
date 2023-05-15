@@ -2,11 +2,10 @@ class Paket:
   
 
 
-  def __init__(self, paketID, namaPengirimPaket, jenisBarang, jenisPaket, durasiPaket, priority):
+  def __init__(self, paketID, namaPengirimPaket, jenisBarang, durasiPaket, priority):
     self.id = paketID
     self.namaPengirimPaket = namaPengirimPaket
     self.jenisBarang = jenisBarang
-    self.jenisPaket = jenisPaket
     self.durasiPaket = durasiPaket
     self.priority = priority
 
