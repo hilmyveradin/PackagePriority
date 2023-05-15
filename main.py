@@ -52,6 +52,19 @@ def printPaket():
           _, paket = priorityQueue.get()
           print(f"ID Paket: {paket.id}, Nama pengirim: {paket.namaPengirimPaket}, Jenis barang: {paket.jenisBarang}, Jenis paket: {paket.jenisPaket}, Durasi: {paket.priority[paket.durasiPaket]}")
 
+def searchPaket():
+    inputID = input("Masukkan ID paket yang ingin dicari: ")
+    while not priorityQueue.empty():
+        _, paket = priorityQueue.get()
+        if paket.id == inputID:
+            print(f"Detail paket: {paket.id}")
+            print(f"Nama Pengirim Paket: {paket.namaPengirimPaket}")
+            print(f"Jenis barang: {paket.jenisBarang}")
+            print(f"Jenis paket: {paket.jenisPaket}")
+            print(f"Durasi: {duration_options[paket.durasiPaket]}")
+    else:
+        print(f"Paket dengan ID {inputID} tidak ditemukan.")
+
 # Initial menu
 while True:
     print("\n\nSelamat datang di layanan pengiriman paket. Ada yang bisa saya bantu hari ini?\n")
@@ -63,7 +76,7 @@ while True:
     if choice == 1:
         addPaket()
     elif choice == 2:
-        print("Menu cari paket belum tersedia.")
+        searchPaket()
     elif choice == 3:
         printPaket()
     elif choice == 4:
@@ -83,7 +96,7 @@ while True:
         if choice == 1:
             addPaket()
         elif choice == 2:
-            print("Menu cari paket belum tersedia.")
+            searchPaket()
         elif choice == 3:
             printPaket()
         elif choice == 4:
