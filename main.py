@@ -38,6 +38,7 @@ def addPaket():
 
     # Print a success message with the new Paket ID
     print(f'\nProses pengiriman paket Anda berhasil! ID paket Anda adalah: {paketID}')
+    print(f'Estimasi waktu pengiriman: {get_estimation(paket.durasiPaket)}')
 
 def printPaket(): 
     print(f"\n")
@@ -52,12 +53,22 @@ def printPaket():
             # Get the package and put it in the temporary queue
             priority_value, paket = priorityQueue.get()
             tempQueue.put((priority_value, paket))
-            
-            print(f"ID Paket: {paket.id}, Nama pengirim: {paket.namaPengirimPaket}, Jenis barang: {paket.jenisBarang}, Durasi: {paket.priority[paket.durasiPaket]}")
+            estimasi = get_estimation(paket.durasiPaket)
+            print(f"ID Paket: {paket.id}, Nama pengirim: {paket.namaPengirimPaket}, Jenis barang: {paket.jenisBarang}, Estimasi waktu: {estimasi}")
 
         # Copy the contents of the temporary queue back to the original queue
         while not tempQueue.empty():
             priorityQueue.put(tempQueue.get())
+
+def get_estimation(durasiPaket):
+    if durasiPaket == 1:
+        return 'Hari ini'
+    elif durasiPaket == 2:
+        return 'Besok'
+    elif durasiPaket == 3:
+        return '2-3 hari'
+    elif durasiPaket == 4:
+        return '3-5 hari'
 
 def searchPaket():
     print(f"\n")
@@ -74,7 +85,7 @@ def searchPaket():
             print(f"Detail paket: {paket.id}")
             print(f"Nama Pengirim Paket: {paket.namaPengirimPaket}")
             print(f"Jenis barang: {paket.jenisBarang}")
-            print(f"Durasi: {duration_options[paket.durasiPaket]}")
+            print(f"Estimasi: {get_estimation(paket.durasiPaket)}")
 
     # Copy the contents of the temporary queue back to the original queue
     while not tempQueue.empty():
