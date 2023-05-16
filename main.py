@@ -23,11 +23,25 @@ def addPaket():
     jenisPaket = input("Masukkan jenis paket: ")
     # Prompt the user to enter the duration of the package
     print("Masukkan durasi pengiriman:")
-    print("1. Hari yang sama")
+    print("1. Same day")
     print("2. Besok")
     print("3. 2-3 hari")
     print("4. 3-5 hari")
+    print("0. Kembali ke menu utama")
     durasiPaket = int(input())
+    if durasiPaket == 0:
+        return
+    elif durasiPaket == 1:
+        estimasi = "hari ini"
+    elif durasiPaket == 2:
+        estimasi = "besok"
+    elif durasiPaket == 3:
+        estimasi = "2-3 hari"
+    elif durasiPaket == 4:
+        estimasi = "3-5 hari"
+    else:
+        print("Pilihan tidak valid. Silakan coba lagi.")
+        return
 
     # Generate a new Paket ID
     paketID = generatePaketID()
@@ -36,8 +50,9 @@ def addPaket():
     paket = Paket(paketID, namaPengirimPaket, jenisBarang, jenisPaket, durasiPaket, priority)
     priorityQueue.put((priority[paket.durasiPaket], paket))
 
-    # Print a success message with the new Paket ID
+    # Print a success message with the new Paket ID and the estimation with priority
     print(f'Proses pengiriman paket Anda berhasil! ID paket Anda adalah: {paketID}')
+    print(f'Estimasi pengiriman: {estimasi}')
 
 def printPaket(): 
     # Print the contents of the queue in order of priority
@@ -47,10 +62,21 @@ def printPaket():
     else:
       print("Antrian paket sekarang:")
       while not priorityQueue.empty():
-          # need to turn this paket as Paket class
           _, paket = priorityQueue.get()
-          print(f"ID Paket: {paket.id}, Nama pengirim: {paket.namaPengirimPaket}, Jenis barang: {paket.jenisBarang}, Jenis paket: {paket.jenisPaket}, Durasi: {paket.priority[paket.durasiPaket]}")
+          estimasi = get_estimation(paket.durasiPaket)
+          print(f"ID Paket: {paket.id}, Nama pengirim: {paket.namaPengirimPaket}, Jenis barang: {paket.jenisBarang}, Jenis paket: {paket.jenisPaket}, Estimasi: {estimasi}")
 
+def get_estimation(durasi):
+    if durasi == 1:
+        return "Hari yang sama"
+    elif durasi == 2:
+        return "Besok"
+    elif durasi == 3:
+        return "2-3 hari"
+    elif durasi == 4:
+        return "3-5 hari"
+    else:
+        return "Durasi tidak valid"
 # Initial menu
 while True:
     print("\n\nSelamat datang di layanan pengiriman paket. Ada yang bisa saya bantu hari ini?\n")
