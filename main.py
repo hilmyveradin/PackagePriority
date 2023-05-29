@@ -1,19 +1,20 @@
+# main.py
 from Paket import Paket
-import queue
+from Algorithms import PriorityQueue
 import sys
 
+# Initialize the counter and the custom priority queue
 paketCounter = 0
-priorityQueue = queue.PriorityQueue(maxsize=0)
+priorityQueue = PriorityQueue()
+
+# Define the duration-to-priority mapping
+priority = {1: 1, 2: 2, 3: 3, 4: 4}
+duration_options = {1: 'hari yang sama', 2: 'besok', 3: '2-3 hari', 4: '3-5 hari'}
 
 def generatePaketID(): 
     global paketCounter
     paketCounter += 1
     return f'PAKET{str(paketCounter).zfill(3)}'
-    
-# Define the duration-to-priority mapping
-global priority
-duration_options = {1: 'hari yang sama', 2: 'besok', 3: '2-3 hari', 4: '3-5 hari'}
-priority = {1: 1, 2: 2, 3: 3, 4: 4}
 
 # Prompt the user for package information and add to queue
 def addPaket():
@@ -38,18 +39,19 @@ def addPaket():
 
     # Print a success message with the new Paket ID
     print(f'\nProses pengiriman paket Anda berhasil! ID paket Anda adalah: {paketID}')
+    print(paket)
     print(f'Estimasi waktu pengiriman: {get_estimation(paket.durasiPaket)}')
 
 def printPaket(): 
     print(f"\n")
     # Print the contents of the queue in order of priority
-    if priorityQueue.empty():
+    if priorityQueue.is_empty():
         print("Tidak ada antrian paket")
         return
     else:
-        tempQueue = queue.PriorityQueue(maxsize=0)
+        tempQueue = PriorityQueue()
         print("Antrian paket sekarang:\n")
-        while not priorityQueue.empty():
+        while not priorityQueue.is_empty():
             # Get the package and put it in the temporary queue
             priority_value, paket = priorityQueue.get()
             tempQueue.put((priority_value, paket))
@@ -57,7 +59,7 @@ def printPaket():
             print(f"ID Paket: {paket.id}, Nama pengirim: {paket.namaPengirimPaket}, Jenis barang: {paket.jenisBarang}, Estimasi waktu: {estimasi}")
 
         # Copy the contents of the temporary queue back to the original queue
-        while not tempQueue.empty():
+        while not tempQueue.is_empty():
             priorityQueue.put(tempQueue.get())
 
 def get_estimation(durasiPaket):
@@ -74,21 +76,22 @@ def searchPaket():
     print(f"\n")
     inputID = input("Masukkan ID paket yang ingin dicari: ")
     paket_ditemukan = False
-    tempQueue = queue.PriorityQueue(maxsize=0)
+    tempQueue = PriorityQueue()
 
-    while not priorityQueue.empty():
+    while not priorityQueue.is_empty():
         priority_value, paket = priorityQueue.get()
         tempQueue.put((priority_value, paket))
 
         if paket.id == inputID:
             paket_ditemukan = True
+            print("\n")
             print(f"Detail paket: {paket.id}")
             print(f"Nama Pengirim Paket: {paket.namaPengirimPaket}")
             print(f"Jenis barang: {paket.jenisBarang}")
             print(f"Estimasi: {get_estimation(paket.durasiPaket)}")
 
     # Copy the contents of the temporary queue back to the original queue
-    while not tempQueue.empty():
+    while not tempQueue.is_empty():
         priorityQueue.put(tempQueue.get())
 
     if not paket_ditemukan:
@@ -97,10 +100,10 @@ def searchPaket():
 def batalkanPaket():
     print(f"\n")
     inputID = input("Masukkan ID paket yang ingin dibatalkan: ")
-    tempQueue = queue.PriorityQueue(maxsize=0)
+    tempQueue = PriorityQueue()
     paket_ditemukan = False
 
-    while not priorityQueue.empty():
+    while not priorityQueue.is_empty():
         _, paket = priorityQueue.get()
         if paket.id == inputID:
             paket_ditemukan = True
@@ -108,12 +111,14 @@ def batalkanPaket():
             tempQueue.put((priority[paket.durasiPaket], paket))
 
     # Copy the contents of the temporary queue back to the original queue
-    while not tempQueue.empty():
+    while not tempQueue.is_empty():
         priorityQueue.put(tempQueue.get())
 
     if paket_ditemukan:
+        print("\n")
         print(f"Paket dengan ID {inputID} telah dibatalkan.")
     else:
+        print("\n")
         print(f"Paket dengan ID {inputID} tidak ditemukan.")
 
 # Initial menu
@@ -134,7 +139,7 @@ while True:
     elif choice == 4:
         printPaket()
     elif choice == 5:
-        print("Terima kasih!")
+        print("Baik, sampai bertemu lagi!")
         sys.exit()
     else:
         print("Pilihan tidak valid. Silakan coba lagi.")
@@ -158,7 +163,7 @@ while True:
         elif choice == 4:
             printPaket()
         elif choice == 5:
-            print("Terima kasih!")
+            print("Baik, sampai bertemu lagi!")
             sys.exit()
         else:
             print("Pilihan tidak valid. Silakan coba lagi.")
