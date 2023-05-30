@@ -39,7 +39,6 @@ def addPaket():
 
     # Print a success message with the new Paket ID
     print(f'\nProses pengiriman paket Anda berhasil! ID paket Anda adalah: {paketID}')
-    print(paket)
     print(f'Estimasi waktu pengiriman: {get_estimation(paket.durasiPaket)}')
 
 def printPaket(): 
